@@ -8,6 +8,16 @@ var feedRouter = require('./routes/feed');
 
 var app = express();
 
+//Connecting to mongo db database
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/rssfeeddb')
+  .then(() => {
+    console.log('Connected to database')
+  })
+  .catch((err) => {
+    console.log('Some error happened ', err);
+  });
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({
