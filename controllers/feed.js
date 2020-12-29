@@ -26,7 +26,6 @@ exports.getAllFeeds = (req, resp, next) => {
 exports.saveFeed = (req, resp, next) => {
     const feed = new Feed(req.body);
     feed.save().then(result => {
-        console.log('--- Save Success ----');
         resp.status(200).json({
           post: {
             id: result._id,
@@ -95,4 +94,21 @@ exports.updateFeed = (req, resp, next) => {
             message: "Failed to update feed",
         })
     });
+}
+
+exports.deleteFeed = (req, resp, next) => {
+    Feed.deleteOne({
+        _id: req.params.id,
+      }).then(result => {
+          console.log(result);
+        if(result.n > 0) {
+          resp.status(200).json({ message: 'Feed deleted sussessfully' });
+        } else {
+          resp.status(401).json({ message: 'Feed with specified id not found' });
+        }
+      }).catch(err => {
+        resp.status(500).json({
+          message: "Failed to delete Feed",
+        })
+      });
 }
