@@ -1,11 +1,5 @@
 const Feed = require('../models/feed');
 
-const feedList = [
-    {"id": 0, "feed": "feed 1" },
-    {"id": 1, "feed": "feed 2" },
-    {"id": 2, "feed": "feed 3" },
-    {"id": 3, "feed": "feed 4" }
-];
 
 exports.getAllFeeds = (req, resp, next) => {
     console.log('Inside controller');
@@ -30,7 +24,7 @@ exports.getAllFeeds = (req, resp, next) => {
 }
 
 exports.saveFeed = (req, resp, next) => {
-    const feed = new Feed(req.body)
+    const feed = new Feed(req.body);
     feed.save().then(result => {
         console.log('--- Save Success ----');
         resp.status(200).json({
@@ -51,4 +45,54 @@ exports.saveFeed = (req, resp, next) => {
           message: "Failed to create a feed!",
         })
       });
+}
+
+exports.getFeed = (req, resp, next) => {
+    Feed.findById(req.params.id).then(res => {
+        if (res) {
+            resp.status(200).json({
+            message: 'Feed fetched sussessfully',
+            feed: res
+          })
+        } else {
+          resp.status(404).json({
+            message: 'Feed not found'
+          })
+        }
+    }).catch(err => {
+        resp.status(500).json({
+            message: "Failed to fetch feed",
+        })
+    });
+}
+
+
+exports.updateFeed = (req, resp, next) => {
+    const feed = new Feed({
+        _id: req.body.id,
+        title: req.body.title,
+        url: req.body.url,
+        textColor: req.body.textColor,
+        headlineColor: req.body.headlineColor,
+        fontSize: req.body.fontSize,
+        width: req.body.width,
+        height: req.body.height,
+
+    });
+    Feed.updateOne({ _id: req.body.id }, feed).then(res => {
+        if (res.n > 0) {
+            resp.status(200).json({
+            message: 'Feed updated sussessfully',
+            feed: res
+          })
+        } else {
+          resp.status(401).json({
+            message: 'Feed not found'
+          })
+        }
+    }).catch(err => {
+        resp.status(500).json({
+            message: "Failed to update feed",
+        })
+    });
 }

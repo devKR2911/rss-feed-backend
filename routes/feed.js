@@ -5,6 +5,8 @@ const feedController = require('../controllers/feed');
 
 router.get('/getAllFeeds', feedController.getAllFeeds);
 router.post('/saveFeed', feedController.saveFeed);
+router.get('/getFeed/:id', feedController.getFeed);
+router.put('/updateFeed', feedController.updateFeed);
 
 module.exports = router;
 
