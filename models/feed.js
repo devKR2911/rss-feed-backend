@@ -5,6 +5,7 @@ const feedSchema = mongoose.Schema({
     url: {type: String, required: true},
     textColor: {type: String, required: true},
     headlineColor: {type: String, required: true},
+    backgroundColor: {type: String, required: true},
     fontSize: {type: String, required: true},
     width: {type: String, required: true},
     height: {type: String, required: true},

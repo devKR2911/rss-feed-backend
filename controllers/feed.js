@@ -71,6 +71,7 @@ exports.updateFeed = (req, resp, next) => {
         url: req.body.url,
         textColor: req.body.textColor,
         headlineColor: req.body.headlineColor,
+        backgroundColor: req.body.backgroundColor,
         fontSize: req.body.fontSize,
         width: req.body.width,
         height: req.body.height,
