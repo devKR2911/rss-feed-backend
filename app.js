@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+require('dotenv').config()
 
 var feedRouter = require('./routes/feed');
 
@@ -10,7 +11,7 @@ var app = express();
 
 //Connecting to mongo db database
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/rssfeeddb')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/rssfeeddb')
   .then(() => {
     console.log('Connected to database')
   })
@@ -51,6 +52,6 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-app.listen(4000);
+app.listen(process.env.PORT || 3000);
 
 module.exports = app;
