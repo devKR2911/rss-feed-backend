@@ -2,11 +2,9 @@ const Feed = require('../models/feed');
 
 
 exports.getAllFeeds = (req, resp, next) => {
-    console.log('Inside controller');
     const feedQuery = Feed.find();
     let feedList;
     feedQuery.then((documents) => {
-        console.log(documents)
         feedList = documents;
         return Feed.count(); // To know the total count of records
       }).then(count => {
@@ -100,7 +98,6 @@ exports.deleteFeed = (req, resp, next) => {
     Feed.deleteOne({
         _id: req.params.id,
       }).then(result => {
-          console.log(result);
         if(result.n > 0) {
           resp.status(200).json({ message: 'Feed deleted sussessfully' });
         } else {
